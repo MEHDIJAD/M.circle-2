@@ -38,10 +38,33 @@ BSRCS = bonus/so_long_bonus.c \
 	
 CC 		= cc
 
-CFLAGS 	=  -Wall -Wextra -Werror  -Wunused-function -fsanitize=address
+CFLAGS 	=  -Wall -Wextra -Werror
 
 MLX = -L/home/eel-garo/include/mlx/ -lmlx -lX11 -lXext
 
+HEADERS_MAND =  mand/so_long.h libft/libft.h ft_printf/ft_printf.h
+
+HEADERS_BONUS =  bonus/so_long_bonus.h libft/libft.h ft_printf/ft_printf.h
+
+LIBFT_SRC=  libft/ft_strlen.c \
+			libft/ft_strchr.c \
+			libft/ft_calloc.c \
+			libft/ft_memcpy.c \
+			libft/ft_memset.c \
+			libft/ft_bzero.c \
+			libft/ft_strdup.c \
+			libft/ft_strnstr.c \
+			libft/ft_itoa.c \
+
+FT_PRINTF_SRC = ft_printf/ft_printf.c \
+				ft_printf/ft_print_format.c \
+				ft_printf/ft_printchar.c \
+				ft_printf/ft_printstr.c \
+				ft_printf/ft_printdigit.c \
+			
+LIBFT_OB = $(LIBFT_SRC:.c=.o)
+
+FT_PRINTF_OB = $(FT_PRINTF_SRC:.c=.o)
 
 OBJS = $(SRCS:.c=.o)
 BOBJS = $(BSRCS:.c=.o)
@@ -71,16 +94,16 @@ $(FT_PRINTF_LIB):
 $(LIBFT_LIB):
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(LIBFT_OB) $(FT_PRINTF_OB)
 	$(CC) $(CFLAGS) $(OBJS) $(MLX) $(FT_PRINTF_LIB) $(LIBFT_LIB) -o $(NAME)                     
 
-$(B_NAME): $(BOBJS)
+$(B_NAME): $(BOBJS) $(LIBFT_OB) $(FT_PRINTF_OB)
 	$(CC) $(CFLAGS) $(BOBJS) $(MLX) $(FT_PRINTF_LIB) $(LIBFT_LIB) -o $(B_NAME)     
 
-$(OBJS): %.o:%.c mand/so_long.h
+$(OBJS): %.o:%.c $(HEADERS_MAND)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(BOBJS): %.o:%.c bonus/so_long_bonus.h
+$(BOBJS): %.o:%.c $(HEADERS_BONUS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:

@@ -108,9 +108,10 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	int			bytes_read;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= OPEN_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0
+		|| BUFFER_SIZE > INT_MAX || fd >= OPEN_MAX)
 		return (NULL);
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buffer = malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
 	bytes_read = ft_read_and_store(fd, &map_line, buffer);

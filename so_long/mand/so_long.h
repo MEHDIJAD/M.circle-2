@@ -18,10 +18,8 @@
 # define OPEN_MAX 1024
 
 # include "/home/eel-garo/include/mlx/mlx.h"
-
 # include <stdlib.h>
 # include <fcntl.h>
-# include <X11/keysym.h>
 # include <stdbool.h>
 # include "../ft_printf/ft_printf.h"
 # include "../libft/libft.h"

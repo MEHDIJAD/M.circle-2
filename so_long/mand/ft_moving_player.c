@@ -17,7 +17,7 @@ int	ft_first_move(int keycode, t_data *data)
 	static int	movement_count;
 
 	ft_get_player_position(data);
-	if (keycode == XK_Escape)
+	if (keycode == 65307)
 		ft_exit(data);
 	if (keycode == 100)
 		put_move(data, data->y_p, data->x_p + 1, &movement_count);

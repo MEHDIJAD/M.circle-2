@@ -47,7 +47,7 @@ int	main(int ac, char *av[])
 	ft_drow_map(&data);
 	ft_get_enemy_positions(&data);
 	mlx_loop_hook(data.mlx, ft_moving_enemy, &data);
-	mlx_hook(data.win, 2, 1 << 0, ft_first_move, &data);
+	mlx_hook(data.win, 2, 1, ft_first_move, &data);
 	mlx_hook(data.win, 17, 0, ft_exit, &data);
 	mlx_loop(data.mlx);
 	return (0);

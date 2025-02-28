@@ -24,7 +24,7 @@ void	ft_puterror(int error_code)
 		ft_printf(2, "Map has more than one P or E !?, try again!\n");
 	}
 	else if (error_code == 4)
-		ft_printf(2, "Error\nMap has other  components than P,E,C,1,0\n");
+		ft_printf(2, "Error\nMap has other  components than P,E,C,1,0, and T\n");
 	else if (error_code == 5)
 		ft_printf(2, "Error\nMap is not Rectangular, try again!\n");
 	else if (error_code == 6)

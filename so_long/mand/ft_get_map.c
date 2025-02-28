@@ -38,7 +38,7 @@ static int	helper_function(t_data *data, int map_height, char *str)
 		i++;
 	}
 	data->ptr[i] = NULL;
-	return (close(fd), 1);
+	return (close(fd), get_next_line(-1), 1);
 }
 
 int	ft_get_map(char *str, t_data *data)

@@ -32,6 +32,31 @@ SRCS_BONUS = bonus/checker_bonus.c \
 			 bonus/ft_sorted_bonus.c \
 			 bonus/get_next_line/get_next_line.c \
 
+LIBFT_SRC = libft/ft_atoi.c \
+			libft/ft_isdigit.c \
+			libft/ft_lstnew.c \
+			libft/ft_lstlast.c \
+			libft/ft_lstadd_back.c \
+			libft/ft_lstdelone.c \
+			libft/ft_lstclear.c \
+			libft/ft_lstsize.c \
+			libft/ft_lstadd_front.c \
+			libft/ft_strjoined.c \
+			libft/ft_strlcpy.c \
+			libft/ft_strdup.c \
+			libft/ft_strlen.c \
+			libft/ft_strncmp.c \
+
+FT_PRINTF_SRC = ft_printf/ft_printf.c \
+				ft_printf/ft_print_format.c \
+				ft_printf/ft_printchar.c \
+				ft_printf/ft_printstr.c \
+				ft_printf/ft_printdigit.c \
+
+
+LIBFT_OB = $(LIBFT_SRC:.c=.o)
+
+FT_PRINTF_OB = $(FT_PRINTF_SRC:.c=.o)
 
 OBJS   = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
@@ -44,8 +69,13 @@ LIBFT_DIR = libft
 
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
-CC     = cc 
+CC     = cc
+
 CFLAGS = -Wall -Wextra -Werror
+
+HEADERS_MAND = mand/push_swap.h libft/libft.h ft_printf/ft_printf.h
+HEADERS_BONUS = bonus/push_swap_bonus.h libft/libft.h ft_printf/ft_printf.h
+
 LIBC   = ar rc
 RM	   = rm -rf
 NAME   = push_swap
@@ -53,25 +83,25 @@ NAME_BONUS = checker
 
 all: $(FT_PRINTF_LIB)  $(LIBFT_LIB) $(NAME)
 
+bonus: $(FT_PRINTF_LIB) $(LIBFT_LIB) $(NAME_BONUS)
+
 $(FT_PRINTF_LIB):
 	$(MAKE) -C $(FT_PRINTF_DIR)
 
 $(LIBFT_LIB):
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(LIBFT_OB) $(FT_PRINTF_OB)
 	$(CC) $(CFLAGS) $(OBJS) $(FT_PRINTF_LIB) $(LIBFT_LIB) -o $(NAME)
 
-$(OBJS): %.o:%.c mand/push_swap.h
-	$(CC) $(CFLAGS) -c  $< -o $@
-
-$(OBJS_BONUS): %.o:%.c bonus/push_swap_bonus.h
-	$(CC) $(CFLAGS) -c  $< -o $@
-
-bonus: $(FT_PRINTF_LIB) $(LIBFT_LIB) $(NAME_BONUS)
-
-$(NAME_BONUS): $(OBJS_BONUS)
+$(NAME_BONUS): $(OBJS_BONUS) $(LIBFT_OB) $(FT_PRINTF_OB)
 	$(CC) $(CFLAGS) $(OBJS_BONUS) $(FT_PRINTF_LIB) $(LIBFT_LIB) -o $(NAME_BONUS)
+
+$(OBJS): %.o:%.c $(HEADERS_MAND)
+	$(CC) $(CFLAGS) -c  $< -o $@
+
+$(OBJS_BONUS): %.o:%.c $(HEADERS_BONUS)
+	$(CC) $(CFLAGS) -c  $< -o $@
 
 clean:
 	$(MAKE) clean -C $(FT_PRINTF_DIR)
